@@ -1,0 +1,7 @@
+D:\8ComicDownloader\8ComicDownloader\obj\x86\Debug\_8ComicDownloader.Properties.Resources.resources
+D:\8ComicDownloader\8ComicDownloader\obj\x86\Debug\8ComicDownloader.csproj.GenerateResource.Cache
+D:\8ComicDownloader\8ComicDownloader\bin\Debug\8ComicDownloader.exe
+D:\8ComicDownloader\8ComicDownloader\bin\Debug\8ComicDownloader.pdb
+D:\8ComicDownloader\8ComicDownloader\obj\x86\Debug\_8ComicDownloader.frmMain.resources
+D:\8ComicDownloader\8ComicDownloader\obj\x86\Debug\8ComicDownloader.exe
+D:\8ComicDownloader\8ComicDownloader\obj\x86\Debug\8ComicDownloader.pdb
