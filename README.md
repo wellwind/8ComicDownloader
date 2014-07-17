@@ -1,4 +1,13 @@
 8ComicDownloader
 ================
 
-A simple program for downloading comics from 8Comic site
+一個簡單從8Comic網站下載漫畫的程式
+
+使用方式
+================
+1. 從 http://www.8comic.com/ 找到想要下載的漫畫
+2. 隨意選擇集數，並將網址貼到8ComicDownloader的Url欄位中
+3. Url欄位下可以選擇分析最後N集漫畫網址，或目前所有集數的網址
+4. 按下[分析漫畫網址]按鈕，產生漫畫圖片連結，與對應目錄
+5. 重複步驟1~4產生所有想下載漫畫的圖片網址
+6. 按下[開始下載]按鈕，即可將漫畫下載到電腦中，路徑與主程式存放目錄相同
