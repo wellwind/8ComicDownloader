@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.btnGenerateLink = new System.Windows.Forms.Button();
             this.txtUrl = new System.Windows.Forms.TextBox();
@@ -35,13 +38,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.chkGetAll = new System.Windows.Forms.CheckBox();
-            this.txtDownloadUrls = new System.Windows.Forms.TextBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnDownload = new System.Windows.Forms.Button();
             this.lblNotice = new System.Windows.Forms.Label();
             this.chkSkipExist = new System.Windows.Forms.CheckBox();
             this.cbComicList = new System.Windows.Forms.ComboBox();
+            this.dgvList = new System.Windows.Forms.DataGridView();
+            this.colSts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUrl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -115,16 +122,6 @@
             this.chkGetAll.Text = "全抓";
             this.chkGetAll.UseVisualStyleBackColor = true;
             // 
-            // txtDownloadUrls
-            // 
-            this.txtDownloadUrls.Location = new System.Drawing.Point(18, 154);
-            this.txtDownloadUrls.Margin = new System.Windows.Forms.Padding(4);
-            this.txtDownloadUrls.Multiline = true;
-            this.txtDownloadUrls.Name = "txtDownloadUrls";
-            this.txtDownloadUrls.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtDownloadUrls.Size = new System.Drawing.Size(753, 361);
-            this.txtDownloadUrls.TabIndex = 13;
-            // 
             // btnClear
             // 
             this.btnClear.Location = new System.Drawing.Point(18, 523);
@@ -182,17 +179,59 @@
             this.cbComicList.TabIndex = 18;
             this.cbComicList.SelectedIndexChanged += new System.EventHandler(this.cbComicList_SelectedIndexChanged);
             // 
+            // dgvList
+            // 
+            this.dgvList.AllowUserToAddRows = false;
+            this.dgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colSts,
+            this.colPath,
+            this.colUrl});
+            this.dgvList.Location = new System.Drawing.Point(18, 154);
+            this.dgvList.Name = "dgvList";
+            this.dgvList.RowHeadersVisible = false;
+            this.dgvList.RowTemplate.Height = 24;
+            this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvList.Size = new System.Drawing.Size(753, 361);
+            this.dgvList.TabIndex = 19;
+            // 
+            // colSts
+            // 
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.colSts.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colSts.HeaderText = "狀態";
+            this.colSts.Name = "colSts";
+            this.colSts.ReadOnly = true;
+            // 
+            // colPath
+            // 
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.colPath.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colPath.HeaderText = "路徑";
+            this.colPath.Name = "colPath";
+            this.colPath.ReadOnly = true;
+            this.colPath.Width = 200;
+            // 
+            // colUrl
+            // 
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.colUrl.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colUrl.HeaderText = "網址";
+            this.colUrl.Name = "colUrl";
+            this.colUrl.ReadOnly = true;
+            this.colUrl.Width = 400;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.dgvList);
             this.Controls.Add(this.cbComicList);
             this.Controls.Add(this.chkSkipExist);
             this.Controls.Add(this.lblNotice);
             this.Controls.Add(this.btnDownload);
             this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.txtDownloadUrls);
             this.Controls.Add(this.chkGetAll);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label2);
@@ -206,6 +245,7 @@
             this.Text = "8Comic Downloader";
             this.Load += new System.EventHandler(this.frmMaim_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,12 +260,15 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.CheckBox chkGetAll;
-        private System.Windows.Forms.TextBox txtDownloadUrls;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.Label lblNotice;
         private System.Windows.Forms.CheckBox chkSkipExist;
         private System.Windows.Forms.ComboBox cbComicList;
+        private System.Windows.Forms.DataGridView dgvList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPath;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colUrl;
     }
 }
 

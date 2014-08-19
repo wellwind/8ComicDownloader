@@ -96,12 +96,15 @@ namespace _8ComicDownloader
         {
             System.Net.WebClient wc = new System.Net.WebClient();
             string html = wc.DownloadString(txtUrl.Text);
+
+            // 解析網頁原始碼
             string comicName = html.Split(new string[] { ":[" }, StringSplitOptions.None)[1].Split(new string[] { "<font id=" }, StringSplitOptions.None)[0].Trim();
             string itemId = html.Split(new string[] { "var ti=" }, StringSplitOptions.None)[1].Split(new string[] { ";" }, StringSplitOptions.None)[0];
             string code = html.Split(new string[] { "var cs='" }, StringSplitOptions.None)[1].Split(new string[] { "'" }, StringSplitOptions.None)[0];
 
             addComicList(comicName, txtUrl.Text);
 
+            // 解析集數資料
             ComicLinkGenerator cg = new ComicLinkGenerator();
             cg.ItemId = itemId;
             cg.Code = code;
@@ -113,33 +116,40 @@ namespace _8ComicDownloader
             {
                 foreach (string url in kvp.Value.Urls)
                 {
-                    sb.AppendLine(String.Format("{0}/{1}|{2}", comicName, kvp.Key, url));
+                    dgvList.Rows.Add(new string [] {"未下載", String.Format("{0}/{1}/{2}", comicName, kvp.Key, url.Split(new string[] { "/" }, StringSplitOptions.None).Last()), url});
                 }
             }
-            txtDownloadUrls.Text += sb.ToString();
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            txtDownloadUrls.Clear();
+            dgvList.Rows.Clear();
         }
 
         private void btnDownload_Click(object sender, EventArgs e)
         {
-            string[] files = txtDownloadUrls.Text.Split(new string[] {"\r", "\n"}, StringSplitOptions.RemoveEmptyEntries);
             progressBar1.Value = 0;
             progressBar1.Step = 1;
-            progressBar1.Maximum = files.Length;
+            progressBar1.Maximum = dgvList.Rows.Count;
             System.Net.WebClient wc = new System.Net.WebClient();
 
-            foreach (string file in files)
+            foreach(DataGridViewRow row in dgvList.Rows)
             {
+                dgvList.CurrentCell = row.Cells[0];
+                row.Selected = true;
                 progressBar1.PerformStep();
-                if(String.IsNullOrEmpty(file.Trim())) continue;
-                string[] tmp = file.Split(new string[] { "|" }, StringSplitOptions.None);
-    
-                string dir = tmp[0];
-                string url = tmp[1];
+                Application.DoEvents();
+
+                if (row.Cells["colSts"].Value.ToString().Equals("已下載"))
+                {
+                    continue;
+                }
+
+                row.Cells["colSts"].Value = "下載中";
+
+                // 重新組合下載目錄
+                string dir = String.Join("/", row.Cells["colPath"].Value.ToString().Split(new string[] {"/"}, StringSplitOptions.None).Take(2).ToArray());
+                string url = row.Cells["colUrl"].Value.ToString();
 
                 string fileName = url.Split(new string[] { "/" }, StringSplitOptions.None).Last();
                 string directory = url.Split(new string[] { "/" }, StringSplitOptions.None).Reverse().ToArray()[1];
@@ -153,6 +163,7 @@ namespace _8ComicDownloader
                 // 檔案已存在就跳過不下載
                 if (chkSkipExist.Checked && File.Exists(to))
                 {
+                    row.Cells["colSts"].Value = "略過";
                     continue;
                 }
 
@@ -177,17 +188,17 @@ namespace _8ComicDownloader
 
                         File.Move(from, to);
                     }
+                    row.Cells["colSts"].Value = "已下載";
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    row.Cells["colSts"].Value = String.Format("下載失敗: {0}", ex.Message);
                 }
-
-                Application.DoEvents();
             }
 
-            changeTitle("Done");
-            MessageBox.Show("Done");
+            Application.DoEvents();
+            changeTitle("全部下載完成");
+            MessageBox.Show("全部下載完成");
         }
     }
 }
