@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.btnGenerateLink = new System.Windows.Forms.Button();
             this.txtUrl = new System.Windows.Forms.TextBox();
@@ -47,6 +47,11 @@
             this.colSts = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUrl = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblDownloadPath = new System.Windows.Forms.Label();
+            this.linkLabelOpen = new System.Windows.Forms.LinkLabel();
+            this.linkLabelChangePath = new System.Windows.Forms.LinkLabel();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
             this.SuspendLayout();
@@ -56,7 +61,7 @@
             this.progressBar1.Location = new System.Drawing.Point(18, 13);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(4);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(595, 31);
+            this.progressBar1.Size = new System.Drawing.Size(527, 31);
             this.progressBar1.TabIndex = 3;
             // 
             // btnGenerateLink
@@ -147,7 +152,7 @@
             // lblNotice
             // 
             this.lblNotice.AutoSize = true;
-            this.lblNotice.Location = new System.Drawing.Point(621, 20);
+            this.lblNotice.Location = new System.Drawing.Point(553, 20);
             this.lblNotice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNotice.Name = "lblNotice";
             this.lblNotice.Size = new System.Drawing.Size(46, 16);
@@ -197,16 +202,16 @@
             // 
             // colSts
             // 
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.colSts.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.colSts.DefaultCellStyle = dataGridViewCellStyle13;
             this.colSts.HeaderText = "狀態";
             this.colSts.Name = "colSts";
             this.colSts.ReadOnly = true;
             // 
             // colPath
             // 
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.colPath.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.colPath.DefaultCellStyle = dataGridViewCellStyle14;
             this.colPath.HeaderText = "路徑";
             this.colPath.Name = "colPath";
             this.colPath.ReadOnly = true;
@@ -214,18 +219,64 @@
             // 
             // colUrl
             // 
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.colUrl.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.colUrl.DefaultCellStyle = dataGridViewCellStyle15;
             this.colUrl.HeaderText = "網址";
             this.colUrl.Name = "colUrl";
             this.colUrl.ReadOnly = true;
             this.colUrl.Width = 400;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(15, 566);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(88, 16);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "下載後路徑";
+            // 
+            // lblDownloadPath
+            // 
+            this.lblDownloadPath.AutoSize = true;
+            this.lblDownloadPath.Location = new System.Drawing.Point(102, 566);
+            this.lblDownloadPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDownloadPath.Name = "lblDownloadPath";
+            this.lblDownloadPath.Size = new System.Drawing.Size(56, 16);
+            this.lblDownloadPath.TabIndex = 21;
+            this.lblDownloadPath.Text = "            ";
+            // 
+            // linkLabelOpen
+            // 
+            this.linkLabelOpen.AutoSize = true;
+            this.linkLabelOpen.Location = new System.Drawing.Point(685, 566);
+            this.linkLabelOpen.Name = "linkLabelOpen";
+            this.linkLabelOpen.Size = new System.Drawing.Size(40, 16);
+            this.linkLabelOpen.TabIndex = 22;
+            this.linkLabelOpen.TabStop = true;
+            this.linkLabelOpen.Text = "開啟";
+            this.linkLabelOpen.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelOpen_LinkClicked);
+            // 
+            // linkLabelChangePath
+            // 
+            this.linkLabelChangePath.AutoSize = true;
+            this.linkLabelChangePath.Location = new System.Drawing.Point(731, 566);
+            this.linkLabelChangePath.Name = "linkLabelChangePath";
+            this.linkLabelChangePath.Size = new System.Drawing.Size(40, 16);
+            this.linkLabelChangePath.TabIndex = 23;
+            this.linkLabelChangePath.TabStop = true;
+            this.linkLabelChangePath.Text = "修改";
+            this.linkLabelChangePath.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelChangePath_LinkClicked);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.ClientSize = new System.Drawing.Size(784, 591);
+            this.Controls.Add(this.linkLabelChangePath);
+            this.Controls.Add(this.linkLabelOpen);
+            this.Controls.Add(this.lblDownloadPath);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.dgvList);
             this.Controls.Add(this.cbComicList);
             this.Controls.Add(this.chkSkipExist);
@@ -269,6 +320,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSts;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPath;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUrl;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblDownloadPath;
+        private System.Windows.Forms.LinkLabel linkLabelOpen;
+        private System.Windows.Forms.LinkLabel linkLabelChangePath;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }
 

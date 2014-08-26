@@ -13,6 +13,8 @@ namespace _8ComicDownloader
 {
     public partial class frmMain : Form
     {
+        private string comicListPath { get { return Path.GetDirectoryName(Application.ExecutablePath) + "/comic_list.txt"; } }
+
         public frmMain()
         {
             InitializeComponent();
@@ -21,7 +23,22 @@ namespace _8ComicDownloader
         private void frmMaim_Load(object sender, EventArgs e)
         {
             lblNotice.Text = "";
+            numericUpDown1.Maximum = Decimal.MaxValue;
+            loadDownloadPath();
             loadComicList();
+        }
+
+        /// <summary>
+        /// 讀取預設下載路徑
+        /// </summary>
+        private void loadDownloadPath()
+        {
+            string downloadPath = Properties.Settings.Default["DownloadPath"].ToString();
+            if (String.IsNullOrEmpty(downloadPath))
+            {
+                downloadPath = Path.GetDirectoryName(Application.ExecutablePath);
+            }
+            lblDownloadPath.Text = downloadPath;
         }
 
         /// <summary>
@@ -29,10 +46,10 @@ namespace _8ComicDownloader
         /// </summary>
         private void loadComicList()
         {
-            if (File.Exists("./comic_list.txt"))
+            if (File.Exists(comicListPath))
             {
                 cbComicList.Items.Clear();
-                cbComicList.Items.AddRange(File.ReadAllLines("comic_list.txt"));
+                cbComicList.Items.AddRange(File.ReadAllLines(comicListPath));
             }
         }
 
@@ -76,7 +93,7 @@ namespace _8ComicDownloader
         /// </summary>
         private void saveComicList()
         {
-            File.WriteAllLines("./comic_list.txt", cbComicList.Items.Cast<string>().ToArray());
+            File.WriteAllLines(comicListPath, cbComicList.Items.Cast<string>().ToArray());
         }
 
         private void changeTitle(string text)
@@ -154,11 +171,11 @@ namespace _8ComicDownloader
                 string fileName = url.Split(new string[] { "/" }, StringSplitOptions.None).Last();
                 string directory = url.Split(new string[] { "/" }, StringSplitOptions.None).Reverse().ToArray()[1];
 
-                lblNotice.Text = "./" + directory + "/" + fileName;
+                lblNotice.Text = row.Cells["colPath"].Value.ToString();
                 changeTitle(lblNotice.Text);
 
-                string from = "./" + fileName;
-                string to = "./" + dir + "/" + fileName;
+                string from = Path.GetTempPath() + "/" + fileName;
+                string to = lblDownloadPath.Text + "/" + dir + "/" + fileName;
 
                 // 檔案已存在就跳過不下載
                 if (chkSkipExist.Checked && File.Exists(to))
@@ -172,12 +189,12 @@ namespace _8ComicDownloader
                 try
                 {
                     // 下載檔案
-                    wc.DownloadFile(url, "./" + fileName);
+                    wc.DownloadFileAsync(new Uri(url), from);
 
                     // 搬移檔案
-                    if (!Directory.Exists("./" + dir))
+                    if (!Directory.Exists(Path.GetDirectoryName(to)))
                     {
-                        Directory.CreateDirectory("./" + dir);
+                        Directory.CreateDirectory(Path.GetDirectoryName(to));
                     }
                     if (!String.IsNullOrEmpty(fileName))
                     {
@@ -199,6 +216,24 @@ namespace _8ComicDownloader
             Application.DoEvents();
             changeTitle("全部下載完成");
             MessageBox.Show("全部下載完成");
+        }
+
+        private void linkLabelOpen_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(lblDownloadPath.Text);
+        }
+
+        private void linkLabelChangePath_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            folderBrowserDialog1.SelectedPath = lblDownloadPath.Text;
+            if (folderBrowserDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                lblDownloadPath.Text = folderBrowserDialog1.SelectedPath;
+                Properties.Settings.Default["DownloadPath"] = lblDownloadPath.Text;
+                Properties.Settings.Default.Save();
+
+                MessageBox.Show("路徑已儲存");
+            }
         }
     }
 }
