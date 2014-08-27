@@ -1,6 +1,7 @@
-8ComicDownloader
-================
+8ComicDownloader Version 1.3 2014/08/27
 
+簡介
+================
 一個簡單從8Comic網站下載漫畫的程式
 
 使用方式
@@ -21,11 +22,14 @@
 
 注意事項
 ================
-- 必須安裝[.Net Framework 4]才可執行 http://www.microsoft.com/zh-tw/download/details.aspx?id=17718
+- 必須安裝[[.Net Framework 4](http://www.microsoft.com/zh-tw/download/details.aspx?id=17718)]才可執行
 - 本程式僅供網路測試，請勿做為商業或任何不法用途
 
 版本紀錄
 ================
+V1.3 - 2014/08/27
+- [Bug]緊急修正v1.2版無法正常下載漫畫的問題
+
 v1.2 - 2014/08/26
 - [介面]抓最後N集原本最大值為100，現在為Decimal.MaxValue(總之非常非常大)
 - [功能]新增下載路徑設定，畫面最下方可以設定調整預設的下載路徑

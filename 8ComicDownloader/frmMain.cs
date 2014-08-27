@@ -174,7 +174,7 @@ namespace _8ComicDownloader
                 lblNotice.Text = row.Cells["colPath"].Value.ToString();
                 changeTitle(lblNotice.Text);
 
-                string from = Path.GetTempPath() + "/" + fileName;
+                // string from = Path.GetTempPath() + "/" + fileName;
                 string to = lblDownloadPath.Text + "/" + dir + "/" + fileName;
 
                 // 檔案已存在就跳過不下載
@@ -188,23 +188,26 @@ namespace _8ComicDownloader
 
                 try
                 {
-                    // 下載檔案
-                    wc.DownloadFileAsync(new Uri(url), from);
-
-                    // 搬移檔案
+                    // 如果目錄不存在，先產生
                     if (!Directory.Exists(Path.GetDirectoryName(to)))
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(to));
                     }
-                    if (!String.IsNullOrEmpty(fileName))
-                    {
-                        if (File.Exists(to))
-                        {
-                            File.Delete(to);
-                        }
 
-                        File.Move(from, to);
-                    }
+                    // 下載檔案
+                    wc.DownloadFile(new Uri(url), to);
+
+                    // 搬移檔案
+
+                    //if (!String.IsNullOrEmpty(fileName))
+                    //{
+                    //    if (File.Exists(to))
+                    //    {
+                    //        File.Delete(to);
+                    //    }
+
+                    //    File.Move(from, to);
+                    //}
                     row.Cells["colSts"].Value = "已下載";
                 }
                 catch (Exception ex)
