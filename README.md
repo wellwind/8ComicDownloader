@@ -1,3 +1,5 @@
+本版本程式已不再維護移並至新版架構，請到以下網址下載最新版本:https://github.com/wellwind/8ComicDownloaderElectron 
+
 8ComicDownloader Version 1.3 2014/08/27
 
 簡介
